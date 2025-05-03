@@ -1,0 +1,36 @@
+[*]
+charset = utf-8
+max_line_length = off
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_size = 4
+indent_style = space
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.{kt,kts}]
+ktlint_code_style = intellij_idea
+ktlint_experimental = disable
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+ij_kotlin_name_count_to_use_star_import = 999
+ij_kotlin_name_count_to_use_star_import_for_members = 999
+ij_kotlin_packages_to_use_import_on_demand = unset
+# ktlint 설정
+ktlint_standard_spacing-between-declarations-with-comments = true
+ktlint_standard_spacing-between-declarations-with-annotations = true
+ktlint_standard_annotation = true
+ktlint_standard_enum-entry-name-case = true
+ktlint_standard_discouraged-comment-location = true
+
+[*.{tf,hcl}]
+ij_hcl-terraform_property_alignment = 0
+
+[*.properties]
+ij_properties_keep_blank_lines = true
+
+[*.md]
+ij_markdown_indent_size = 4
+ij_markdown_format_tables = true
+ij_markdown_wrap_text_if_long = false
