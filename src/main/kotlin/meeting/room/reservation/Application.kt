@@ -1,11 +1,11 @@
-package garlic.burger
+package meeting.room.reservation
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class BurgerApplication
+class Application
 
 fun main(args: Array<String>) {
-	runApplication<BurgerApplication>(*args)
+	runApplication<Application>(*args)
 }

@@ -1,10 +1,10 @@
-package garlic.burger
+package meeting.room.reservation
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class BurgerApplicationTests {
+class ApplicationTests {
 
 	@Test
 	fun contextLoads() {
