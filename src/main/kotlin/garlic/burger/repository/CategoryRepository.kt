@@ -1,4 +1,4 @@
-package garlic.burger.infrastructure
+package garlic.burger.repository
 
 import garlic.burger.domain.Category
 import org.springframework.data.jpa.repository.JpaRepository
