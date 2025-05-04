@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import java.util.*
+import java.util.UUID
 
 class HelloControllerTest : IntegrationTestBase() {
     @Test
@@ -18,9 +18,10 @@ class HelloControllerTest : IntegrationTestBase() {
         val expectedResponse = HelloResponse(username)
 
         // when
-        val performed = mockMvc.perform(
-            get("/hello").param("username", username).contentType(MediaType.APPLICATION_JSON),
-        )
+        val performed =
+            mockMvc.perform(
+                get("/hello").param("username", username).contentType(MediaType.APPLICATION_JSON),
+            )
 
         // then
         val response = objectMapper.readValue<HelloResponse>(performed.andReturn().response.contentAsString)
