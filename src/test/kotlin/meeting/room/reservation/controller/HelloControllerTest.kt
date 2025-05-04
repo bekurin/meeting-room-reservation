@@ -19,9 +19,7 @@ class HelloControllerTest : IntegrationTestBase() {
 
         // when
         val performed = mockMvc.perform(
-            get("/hello")
-                .param("username", username)
-                .contentType(MediaType.APPLICATION_JSON),
+            get("/hello").param("username", username).contentType(MediaType.APPLICATION_JSON),
         )
 
         // then
@@ -32,4 +30,3 @@ class HelloControllerTest : IntegrationTestBase() {
         }
     }
 }
-
