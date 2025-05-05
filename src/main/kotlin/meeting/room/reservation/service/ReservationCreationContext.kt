@@ -52,6 +52,10 @@ data class ReservationCreationContext(
         return request.endAt
     }
 
+    fun getTitle(): String {
+        return request.title
+    }
+
     fun createReservationParticipant(savedReservation: Reservation): List<ReservationParticipant> {
         return getParticipants().map { participant ->
             ReservationParticipant(reservation = savedReservation, participant)

@@ -15,6 +15,7 @@ data class ReservationV1CreationRequest(
 ) {
     fun toReservation(creator: User, room: Room): Reservation {
         return Reservation(
+            title = title,
             room = room,
             creator = creator,
             startAt = startAt,

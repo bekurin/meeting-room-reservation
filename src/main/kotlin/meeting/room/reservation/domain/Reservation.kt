@@ -12,12 +12,19 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "reservation")
 class Reservation(
+    title: String,
     room: Room,
     creator: User,
     startAt: LocalDateTime,
     endAt: LocalDateTime,
 ) : BaseEntity() {
+    /**
+     * 추후에는 기본 생성자를 ReservationCreationContext 만 가능하도록 구현한다.
+     * 그러면 소스 코드 어디에서도 ReesrvationCreationContext를 만들어서 Reservation 객체를 만들도록 강제할 수 있다.
+     * 그렇다면 항상 동일한 검증을 수행하도록 유도할 수 있다.
+     */
     constructor(reservationCreationContext: ReservationCreationContext) : this(
+        title = reservationCreationContext.request.title,
         room = reservationCreationContext.room,
         creator = reservationCreationContext.getCreator(),
         startAt = reservationCreationContext.getStartAt(),
@@ -27,7 +34,7 @@ class Reservation(
     }
 
     @Column(nullable = false)
-    var title: String = ""
+    var title: String = title
         protected set
 
     @Column(nullable = false)
@@ -47,7 +54,4 @@ class Reservation(
     @JoinColumn(name = "creator_id")
     var creator: User = creator
         protected set
-//
-//    @OneToMany(mappedBy = "reservation")
-//    val participants: MutableList<ReservationParticipant> = mutableListOf()
 }
