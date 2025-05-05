@@ -35,7 +35,7 @@ class ReservationV1Service(
 
         // 3. 회의실 존재 여부 및 사용 가능 검증
         val room = roomRepository.findById(request.roomId)
-                .orElseThrow { throw ResourceNotFoundException("회의실 정보를 찾을 수 없습니다.") }
+            .orElseThrow { throw ResourceNotFoundException("회의실 정보를 찾을 수 없습니다.") }
         if (room.available.not()) {
             throw BadRequestException("현재 회의실이 사용 불가 상태입니다.")
         }
@@ -56,10 +56,10 @@ class ReservationV1Service(
 
         // 6. 중복 회의실 검증 및 gap 락 획득
         val overlappedReservations = reservationRepository.findByRoomIdAndStartAtLessThanAndEndAtGreaterThan(
-                request.roomId,
-                request.startAt,
-                request.endAt,
-            )
+            request.roomId,
+            request.startAt,
+            request.endAt,
+        )
         if (overlappedReservations.isNotEmpty()) {
             throw BadRequestException("회의실이 이미 예약되어 있습니다.")
         }
@@ -71,9 +71,9 @@ class ReservationV1Service(
 
         // 8. 회의실 참여자 저장
         val reservationParticipants = request.participants.map { participantId ->
-                val participant = userIdToUser[participantId] ?: throw ResourceNotFoundException("회원 정보를 찾을 수 없습니다")
-                ReservationParticipant(savedReservation, participant)
-            }
+            val participant = userIdToUser[participantId] ?: throw ResourceNotFoundException("회원 정보를 찾을 수 없습니다")
+            ReservationParticipant(savedReservation, participant)
+        }
         val savedReservationParticipants = reservationParticipantRepository.saveAll(reservationParticipants)
 
         return ReservationResponse(savedReservation, savedReservationParticipants)
