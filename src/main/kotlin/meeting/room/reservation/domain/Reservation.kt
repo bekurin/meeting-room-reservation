@@ -24,7 +24,7 @@ class Reservation(
      * 그렇다면 항상 동일한 검증을 수행하도록 유도할 수 있다.
      */
     constructor(reservationCreationContext: ReservationCreationContext) : this(
-        title = reservationCreationContext.request.title,
+        title = reservationCreationContext.getTitle(),
         room = reservationCreationContext.room,
         creator = reservationCreationContext.getCreator(),
         startAt = reservationCreationContext.getStartAt(),
