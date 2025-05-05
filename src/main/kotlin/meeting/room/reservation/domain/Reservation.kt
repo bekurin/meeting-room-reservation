@@ -6,6 +6,7 @@ import jakarta.persistence.FetchType.LAZY
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import meeting.room.reservation.service.ReservationCreationContext
 import java.time.LocalDateTime
 
 @Entity
@@ -16,6 +17,15 @@ class Reservation(
     startAt: LocalDateTime,
     endAt: LocalDateTime,
 ) : BaseEntity() {
+    constructor(reservationCreationContext: ReservationCreationContext) : this(
+        room = reservationCreationContext.room,
+        creator = reservationCreationContext.getCreator(),
+        startAt = reservationCreationContext.getStartAt(),
+        endAt = reservationCreationContext.getEndAt(),
+    ) {
+        reservationCreationContext.validate()
+    }
+
     @Column(nullable = false)
     var title: String = ""
         protected set
