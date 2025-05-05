@@ -28,16 +28,13 @@ class ReservationV1Service(
         }
 
         // 2. 예약 시간 검증
-        val durationMinutes =
-            Duration.between(request.startAt, request.endAt)
-                .toMinutes()
+        val durationMinutes = Duration.between(request.startAt, request.endAt).toMinutes()
         if (durationMinutes < 10 || durationMinutes >= 480) {
             throw BadRequestException("예약 시간은 최소 10분부터 최대 8시간 사이여야 합니다.")
         }
 
         // 3. 회의실 존재 여부 및 사용 가능 검증
-        val room =
-            roomRepository.findById(request.roomId)
+        val room = roomRepository.findById(request.roomId)
                 .orElseThrow { throw ResourceNotFoundException("회의실 정보를 찾을 수 없습니다.") }
         if (room.available.not()) {
             throw BadRequestException("현재 회의실이 사용 불가 상태입니다.")
@@ -58,8 +55,7 @@ class ReservationV1Service(
         }
 
         // 6. 중복 회의실 검증 및 gap 락 획득
-        val overlappedReservations =
-            reservationRepository.findByRoomIdAndStartAtLessThanAndEndAtGreaterThan(
+        val overlappedReservations = reservationRepository.findByRoomIdAndStartAtLessThanAndEndAtGreaterThan(
                 request.roomId,
                 request.startAt,
                 request.endAt,
@@ -74,8 +70,7 @@ class ReservationV1Service(
         val savedReservation = reservationRepository.save(reservation)
 
         // 8. 회의실 참여자 저장
-        val reservationParticipants =
-            request.participants.map { participantId ->
+        val reservationParticipants = request.participants.map { participantId ->
                 val participant = userIdToUser[participantId] ?: throw ResourceNotFoundException("회원 정보를 찾을 수 없습니다")
                 ReservationParticipant(savedReservation, participant)
             }

@@ -13,10 +13,7 @@ data class ReservationV1CreationRequest(
     val roomId: Int,
     val participants: List<Int>,
 ) {
-    fun toReservation(
-        creator: User,
-        room: Room,
-    ): Reservation {
+    fun toReservation(creator: User, room: Room): Reservation {
         return Reservation(
             room = room,
             creator = creator,
