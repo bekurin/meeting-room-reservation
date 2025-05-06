@@ -1,13 +1,13 @@
 package meeting.room.reservation.domain
 
 import jakarta.persistence.Column
+import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType.LAZY
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 import meeting.room.reservation.service.ReservationCreationContext
-import java.time.LocalDateTime
 
 @Entity
 @Table(name = "reservation")
@@ -15,8 +15,7 @@ class Reservation(
     title: String,
     room: Room,
     creator: User,
-    startAt: LocalDateTime,
-    endAt: LocalDateTime,
+    timePeriod: TimePeriod,
 ) : BaseEntity() {
     /**
      * 추후에는 기본 생성자를 ReservationCreationContext 만 가능하도록 구현한다.
@@ -27,8 +26,7 @@ class Reservation(
         title = reservationCreationContext.getTitle(),
         room = reservationCreationContext.room,
         creator = reservationCreationContext.getCreator(),
-        startAt = reservationCreationContext.getStartAt(),
-        endAt = reservationCreationContext.getEndAt(),
+        timePeriod = reservationCreationContext.createTimePeriod(),
     ) {
         reservationCreationContext.validate()
     }
@@ -37,12 +35,8 @@ class Reservation(
     var title: String = title
         protected set
 
-    @Column(nullable = false)
-    var startAt: LocalDateTime = startAt
-        protected set
-
-    @Column(nullable = false)
-    var endAt: LocalDateTime = endAt
+    @Embedded
+    var timePeriod: TimePeriod = timePeriod
         protected set
 
     @ManyToOne(fetch = LAZY)

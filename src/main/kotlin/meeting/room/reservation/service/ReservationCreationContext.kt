@@ -4,11 +4,11 @@ import meeting.room.reservation.controller.request.ReservationV2CreationRequest
 import meeting.room.reservation.domain.Reservation
 import meeting.room.reservation.domain.ReservationParticipant
 import meeting.room.reservation.domain.Room
+import meeting.room.reservation.domain.TimePeriod
 import meeting.room.reservation.domain.User
 import meeting.room.reservation.exception.BadRequestException
 import meeting.room.reservation.exception.ResourceNotFoundException
 import java.time.Duration
-import java.time.LocalDateTime
 
 data class ReservationCreationContext(
     val users: List<User>,
@@ -44,12 +44,8 @@ data class ReservationCreationContext(
             ?: throw ResourceNotFoundException("회원 정보를 찾을 수 없습니다.")
     }
 
-    fun getStartAt(): LocalDateTime {
-        return request.startAt
-    }
-
-    fun getEndAt(): LocalDateTime {
-        return request.endAt
+    fun createTimePeriod(): TimePeriod {
+        return TimePeriod(request.startAt, request.endAt)
     }
 
     fun getTitle(): String {

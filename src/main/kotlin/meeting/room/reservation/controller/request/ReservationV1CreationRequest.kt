@@ -2,6 +2,7 @@ package meeting.room.reservation.controller.request
 
 import meeting.room.reservation.domain.Reservation
 import meeting.room.reservation.domain.Room
+import meeting.room.reservation.domain.TimePeriod
 import meeting.room.reservation.domain.User
 import java.time.LocalDateTime
 
@@ -18,8 +19,7 @@ data class ReservationV1CreationRequest(
             title = title,
             room = room,
             creator = creator,
-            startAt = startAt,
-            endAt = endAt,
+            timePeriod = TimePeriod(startAt, endAt),
         )
     }
 }
