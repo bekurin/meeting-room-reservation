@@ -39,11 +39,6 @@ data class ReservationCreationContext(
         }
     }
 
-    fun getCreator(): User {
-        return users.firstOrNull { user -> user.id == request.creatorId }
-            ?: throw ResourceNotFoundException("회원 정보를 찾을 수 없습니다.")
-    }
-
     fun createTimePeriod(): TimePeriod {
         return TimePeriod(request.startAt, request.endAt)
     }
@@ -56,6 +51,11 @@ data class ReservationCreationContext(
         return getParticipants().map { participant ->
             ReservationParticipant(reservation = savedReservation, participant)
         }
+    }
+
+    fun getCreator(): User {
+        return users.firstOrNull { user -> user.id == request.creatorId }
+            ?: throw ResourceNotFoundException("회원 정보를 찾을 수 없습니다.")
     }
 
     private fun getParticipants(): List<User> {
